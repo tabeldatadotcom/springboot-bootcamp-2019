@@ -5,23 +5,23 @@
  */
 package com.tabeldata.bootcamp.belajarspringboot;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author dimasm93
  */
+@Component
 public class Mahasiswa {
 
-    public Mahasiswa() {
-    }
-
-    public Mahasiswa(String nama, Integer semester, Kelas kelas) {
-        this.nama = nama;
-        this.semester = semester;
-        this.kelas = kelas;
-    }    
-    
+    @Value("Dimas maryanto")
     private String nama;
+    @Value("1")
     private Integer semester;
+    
+    @Autowired
     private Kelas kelas;
 
     public String getNama() {
@@ -48,7 +48,5 @@ public class Mahasiswa {
         this.kelas = kelas;
     }
     
-    
-        
     
 }

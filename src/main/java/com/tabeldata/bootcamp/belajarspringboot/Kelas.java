@@ -5,13 +5,17 @@
  */
 package com.tabeldata.bootcamp.belajarspringboot;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author dimasm93
  */
+@Component
 public class Kelas {
     
-    
+    @Value("Sistem informasi 01")
     private String nama;
 
     public String getNama() {

@@ -7,9 +7,9 @@ public class BelajarSpringbootApplication {
 
     public static void main(String[] args) {
        ApplicationContext context = new ClassPathXmlApplicationContext("spring-container.xml");
-       Mahasiswa dimas =(Mahasiswa) context.getBean("dimas");       
+       Mahasiswa dimas =(Mahasiswa) context.getBean("mahasiswa");       
       
-       System.out.println("nama: "+ dimas.getNama() +" semester: "+dimas.getSemester()+ " kelas: "+ dimas.getKelas().getNama());
+       System.out.println("nama: "+ dimas.getNama() +" semester: "+dimas.getSemester()+" kelas: "+ dimas.getKelas().getNama());
     }
 
 }
