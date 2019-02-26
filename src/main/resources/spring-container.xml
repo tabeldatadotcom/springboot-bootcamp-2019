@@ -10,9 +10,9 @@ and open the template in the editor.
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     
     <bean id="dimas" class="com.tabeldata.bootcamp.belajarspringboot.Mahasiswa">
-        <property name="nama" value="Dimas maryanto"/>
-        <property name="semester" value="1"/>
-        <property name="kelas" ref="si"/>
+        <constructor-arg name="nama" value="Hari sapto adi"/>
+        <constructor-arg name="semester" value="8"/>
+        <constructor-arg name="kelas" ref="si"/>
     </bean>
     
     <bean id="si" class="com.tabeldata.bootcamp.belajarspringboot.Kelas">

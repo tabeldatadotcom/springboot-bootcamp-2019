@@ -10,6 +10,15 @@ package com.tabeldata.bootcamp.belajarspringboot;
  * @author dimasm93
  */
 public class Mahasiswa {
+
+    public Mahasiswa() {
+    }
+
+    public Mahasiswa(String nama, Integer semester, Kelas kelas) {
+        this.nama = nama;
+        this.semester = semester;
+        this.kelas = kelas;
+    }    
     
     private String nama;
     private Integer semester;
