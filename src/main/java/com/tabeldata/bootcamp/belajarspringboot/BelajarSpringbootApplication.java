@@ -23,14 +23,6 @@ public class BelajarSpringbootApplication {
         rs = context.getBean("randomString", RandomString.class);
         System.out.println(rs.getValue());
 
-        rs = context.getBean("randomString", RandomString.class);
-        System.out.println(rs.getValue());
-
-        rs = context.getBean("randomString", RandomString.class);
-        System.out.println(rs.getValue());
-
-        rs = context.getBean("randomString", RandomString.class);
-        System.out.println(rs.getValue());
 
         System.out.println("---prototype ---");
 
@@ -46,11 +38,6 @@ public class BelajarSpringbootApplication {
         proto = context.getBean(RandomStringPrototype.class);
         System.out.println(proto.getValue());
         
-        proto = context.getBean(RandomStringPrototype.class);
-        System.out.println(proto.getValue());
-        
-        proto = context.getBean(RandomStringPrototype.class);
-        System.out.println(proto.getValue());
 
     }
 
