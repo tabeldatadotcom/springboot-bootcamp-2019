@@ -6,6 +6,7 @@
 package com.tabeldata.bootcamp.belajarspringboot.beans;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Kelas {
 
-    @Value("Sistem informasi 01")
-    private String nama;
+    @Autowired
+    private String nama2;
 
     @Autowired
     private RandomString singletonString;
@@ -26,11 +27,11 @@ public class Kelas {
     private RandomStringPrototype prototypeScript;
 
     public String getNama() {
-        return nama;
+        return nama2;
     }
 
     public void setNama(String nama) {
-        this.nama = nama;
+        this.nama2 = nama;
     }
 
     @Override

@@ -11,14 +11,9 @@ public class BelajarSpringbootApplication {
 
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-        Mahasiswa dimas = (Mahasiswa) context.getBean("mahasiswa");
-        System.out.println(dimas.toString());
         
-        Mahasiswa yusuf = (Mahasiswa) context.getBean("mahasiswa");
-        System.out.println(yusuf.toString());
-     
         Kelas si = (Kelas) context.getBean("kelas");
-        System.out.println(si.toString());
+        System.out.println(si.getNama());
 
     }
 
