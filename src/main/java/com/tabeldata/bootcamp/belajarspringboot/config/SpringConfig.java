@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.tabeldata.bootcamp.belajarspringboot.beans.Kelas;
+import com.tabeldata.bootcamp.belajarspringboot.beans.Mahasiswa;
+
 /**
  *
  * @author dimasm93
@@ -27,5 +30,15 @@ public class SpringConfig {
 	public String nama2() {
 		return "Configurasion dari bean 2";
 	}
-
+	
+	@Bean
+	public Mahasiswa dimas() {
+		return new Mahasiswa("Dimas Maryanto", 7);
+	}
+	
+	@Bean
+	public Mahasiswa gufron() {
+		return new Mahasiswa("Gufron", 7);
+	}
+	
 }

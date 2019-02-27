@@ -14,7 +14,9 @@ public class BelajarSpringbootApplication {
         
         Kelas si = (Kelas) context.getBean("kelas");
         System.out.println(si.getNama());
-
+        
+        Mahasiswa dimas = context.getBean("gufron",Mahasiswa.class);
+        System.out.println(dimas.toString());
     }
 
 }

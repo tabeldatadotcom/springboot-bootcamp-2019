@@ -13,12 +13,17 @@ import org.springframework.stereotype.Component;
  *
  * @author dimasm93
  */
-@Component
 public class Mahasiswa {
+	
+	public Mahasiswa() {
+	}
+	
+	public Mahasiswa(String nama, Integer semester) {
+		this.nama = nama;
+		this.semester = semester;
+	}	
 
-    @Value("Dimas maryanto")
     private String nama;
-    @Value("1")
     private Integer semester;
     
     @Autowired
@@ -56,7 +61,7 @@ public class Mahasiswa {
 
     @Override
     public String toString() {
-        return String.format("singleton: %s , protoptype: %s", this.singletonString.getValue(), this.prototypeScript.getValue());
+        return String.format("nama: %s, semester: %s, namaKelas: %s", this.nama, this.semester, this.kelas.getNama());
     }
     
     
