@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tabeldata.bootcamp.belajarspringboot;
+package com.tabeldata.bootcamp.belajarspringboot.beans;
 
 import java.util.UUID;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,10 +15,10 @@ import org.springframework.stereotype.Component;
  * @author dimasm93
  */
 @Component
-@Scope("singleton")
-public class RandomString {
-
-    public RandomString() {
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class RandomStringPrototype {
+    
+    public RandomStringPrototype() {
         this.value = UUID.randomUUID().toString();
     }
 
@@ -26,5 +27,5 @@ public class RandomString {
     public String getValue() {
         return value;
     }
-
+    
 }
