@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.tabeldata.bootcamp.belajarspringboot.beans.Kelas;
 import com.tabeldata.bootcamp.belajarspringboot.beans.Mahasiswa;
 
 /**
