@@ -5,6 +5,7 @@
  */
 package com.tabeldata.bootcamp.belajarspringboot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Kelas {
-    
+
     @Value("Sistem informasi 01")
     private String nama;
+
+    @Autowired
+    private RandomString singletonString;
+
+    @Autowired
+    private RandomStringPrototype prototypeScript;
 
     public String getNama() {
         return nama;
@@ -25,5 +32,10 @@ public class Kelas {
     public void setNama(String nama) {
         this.nama = nama;
     }
-   
+
+    @Override
+    public String toString() {
+        return String.format("singleton: %s , protoptype: %s", this.singletonString.getValue(), this.prototypeScript.getValue());
+    }
+
 }

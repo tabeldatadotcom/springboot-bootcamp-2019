@@ -7,6 +7,7 @@ package com.tabeldata.bootcamp.belajarspringboot;
 
 import java.util.UUID;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author dimasm93
  */
 @Component
-@Scope("prototype")
+@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class RandomStringPrototype {
     
     public RandomStringPrototype() {

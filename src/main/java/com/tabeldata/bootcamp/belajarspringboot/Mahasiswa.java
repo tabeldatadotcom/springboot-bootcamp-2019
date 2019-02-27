@@ -23,6 +23,12 @@ public class Mahasiswa {
     
     @Autowired
     private Kelas kelas;
+    
+    @Autowired
+    private RandomString singletonString;
+    
+    @Autowired
+    private RandomStringPrototype prototypeScript;
 
     public String getNama() {
         return nama;
@@ -47,6 +53,13 @@ public class Mahasiswa {
     public void setKelas(Kelas kelas) {
         this.kelas = kelas;
     }
+
+    @Override
+    public String toString() {
+        return String.format("singleton: %s , protoptype: %s", this.singletonString.getValue(), this.prototypeScript.getValue());
+    }
+    
+    
     
     
 }
