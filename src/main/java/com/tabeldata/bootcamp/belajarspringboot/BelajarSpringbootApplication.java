@@ -1,6 +1,7 @@
 package com.tabeldata.bootcamp.belajarspringboot;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,8 +35,24 @@ public class BelajarSpringbootApplication {
 		for (Buku buku : listByNamaAndPengarang) {
 			System.out.println(buku.toString());
 		}
-
-
+		
+		Buku pemograman = new Buku();
+		pemograman.setId(UUID.randomUUID().toString());
+		pemograman.setNama("Bahasa pemograman java baru");
+		pemograman.setIsbn("12342314234");
+		pemograman.setNamaPengarang("Dimas Maryanto");
+		pemograman.setPenerbit("Gramedia");
+		pemograman.setTahunTerbit(2018);
+		pemograman.setCreatedBy("operator");
+		
+		dao.save(pemograman);
+		
+		System.out.println("pencarian data semua setelah insert");
+		
+		List<Buku> list = dao.daftarList();
+		for(Buku buku : list) {
+			System.out.println(buku.toString());
+		}
 	}
 
 }
