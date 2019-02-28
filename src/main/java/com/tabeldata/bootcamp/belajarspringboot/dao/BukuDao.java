@@ -24,13 +24,22 @@ public class BukuDao {
 		String sql = "select * from buku";
 		return this.jdbc.query(sql, new BukuRowMapper());
 	}
-	
+
 	public Buku findById(String primaryKey) throws EmptyResultDataAccessException {
 		String sql = "select * from buku where id = ?";
-		return this.jdbc.queryForObject(sql, new BukuRowMapper(), new Object[] {primaryKey});
+		return this.jdbc.queryForObject(sql, new BukuRowMapper(), new Object[] { primaryKey });
 	}
-	
-	private class BukuRowMapper implements RowMapper<Buku>{
+
+	public List<Buku> findByNamaAndNamaPengarang(String nama, String pengarang) {
+		String sql = "select * from buku where nama like ? and nama_pengarang like ?";
+		return this.jdbc.query(sql, new BukuRowMapper(),
+				new Object[] { 
+						new StringBuilder("%").append(nama).append("%").toString(),
+						new StringBuilder().append(pengarang).append("%").toString() 
+				});
+	}
+
+	private class BukuRowMapper implements RowMapper<Buku> {
 
 		@Override
 		public Buku mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -46,7 +55,7 @@ public class BukuDao {
 			aBuku.setLastUpdatedBy(rs.getString("last_updated_by"));
 			return aBuku;
 		}
-		
+
 	}
 
 }
