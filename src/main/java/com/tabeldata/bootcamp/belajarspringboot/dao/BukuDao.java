@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -21,24 +22,12 @@ public class BukuDao {
 
 	public List<Buku> daftarList() {
 		String sql = "select * from buku";
-		return this.jdbc.query(sql, new RowMapper<Buku>() {
-
-			@Override
-			public Buku mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Buku aBuku = new Buku();
-				aBuku.setId(rs.getString("id"));
-				aBuku.setNama(rs.getString("nama"));
-				aBuku.setIsbn(rs.getString("isbn"));
-				aBuku.setTahunTerbit(rs.getInt("tahun_terbit"));
-				aBuku.setNamaPengarang(rs.getString("nama_pengarang"));
-				aBuku.setPenerbit(rs.getString("penerbit"));
-				aBuku.setCreatedDate(rs.getTimestamp("created_date"));
-				aBuku.setLastUpdatedDate(rs.getTimestamp("last_updated_date"));
-				aBuku.setLastUpdatedBy(rs.getString("last_updated_by"));
-				return aBuku;
-			}
-
-		});
+		return this.jdbc.query(sql, new BukuRowMapper());
+	}
+	
+	public Buku findById(String primaryKey) throws EmptyResultDataAccessException {
+		String sql = "select * from buku where id = ?";
+		return this.jdbc.queryForObject(sql, new BukuRowMapper(), new Object[] {primaryKey});
 	}
 	
 	private class BukuRowMapper implements RowMapper<Buku>{
