@@ -1,5 +1,7 @@
 package com.tabeldata.bootcamp.belajarspringboot;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +24,11 @@ public class BelajarSpringbootApplication {
 		// cari data buku berdasarkan id = prog-java
 		try {
 			Buku progJava = dao.findById("prog-java");
+			progJava.setNamaPengarang("Hari sapto adi");
+			progJava.setLastUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
+			progJava.setLastUpdatedBy("dimas");
+			dao.update(progJava);
+			
 			System.out.println(progJava.toString());
 		} catch (EmptyResultDataAccessException erdae) {			
 			System.err.println("Data tidak ditemukan");
@@ -46,6 +53,8 @@ public class BelajarSpringbootApplication {
 		pemograman.setCreatedBy("operator");
 		
 		dao.save(pemograman);
+		
+		dao.delete(pemograman.getId());
 		
 		System.out.println("pencarian data semua setelah insert");
 		

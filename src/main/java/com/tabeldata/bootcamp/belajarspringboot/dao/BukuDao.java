@@ -45,6 +45,48 @@ public class BukuDao {
 		this.jdbc.update(sql, new InsertBuku(buku));
 	}
 
+	@Transactional
+	public void update(Buku buku) {
+		String sql = "update buku set "
+				+ "nama = ?, "
+				+ "isbn = ?, "
+				+ "nama_pengarang = ?, "
+				+ "penerbit = ?, "
+				+ "tahun_terbit = ?, "
+				+ "last_updated_date = ?, "
+				+ "last_updated_by = ? "
+				+ "where id = ?";
+		this.jdbc.update(sql, new UpdateBuku(buku));
+	}
+	
+	@Transactional
+	public void delete(String id) {
+		String sql = "delete from buku where id = ?";
+		this.jdbc.update(sql, new Object[] {id});
+	}
+
+	public class UpdateBuku implements PreparedStatementSetter {
+
+		final Buku buku;
+
+		public UpdateBuku(Buku buku) {
+			this.buku = buku;
+		}
+
+		@Override
+		public void setValues(PreparedStatement ps) throws SQLException {			
+			ps.setString(1, buku.getNama());
+			ps.setString(2, buku.getIsbn());
+			ps.setString(3, buku.getNamaPengarang());
+			ps.setString(4, buku.getPenerbit());
+			ps.setInt(5, buku.getTahunTerbit());
+			ps.setTimestamp(6, buku.getLastUpdatedDate());
+			ps.setString(7, buku.getLastUpdatedBy());
+			ps.setString(8, buku.getId());
+		}
+
+	}
+
 	public class InsertBuku implements PreparedStatementSetter {
 
 		final Buku buku;
