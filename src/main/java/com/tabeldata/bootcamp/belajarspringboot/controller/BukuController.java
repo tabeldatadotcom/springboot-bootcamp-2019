@@ -16,8 +16,13 @@ public class BukuController {
 	@Autowired
 	private BukuDao dao;
 
-	@GetMapping(path = "/buku/list", produces = MediaType.APPLICATION_XML_VALUE)
-	public List<Buku> findAll() {
+	@GetMapping(path = "/buku/xml/list", produces = MediaType.APPLICATION_XML_VALUE)
+	public List<Buku> findAllXml() {
+		return dao.daftarList();
+	}
+	
+	@GetMapping(path = "/buku/json/list")
+	public List<Buku> findAllJson() {
 		return dao.daftarList();
 	}
 }
