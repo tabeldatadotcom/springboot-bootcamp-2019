@@ -51,7 +51,7 @@ public class BukuController {
 
 	@PostMapping("/")
 	public ResponseEntity<Buku> save(@RequestBody Buku buku) {
-		console.info("updated : {}", buku.toString());
+		console.info("created : {}", buku.toString());
 		dao.save(buku);
 		return ResponseEntity.ok().build();
 	}
