@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tabeldata.bootcamp.belajarspringboot.model.Buku;
 import com.tabeldata.bootcamp.belajarspringboot.model.Kategori;
 
 @Repository
@@ -25,6 +26,11 @@ public class KategoriBukuDao {
 	public List<Kategori> daftarList() {
 		String sql = "select * from kategori_buku";
 		return this.jdbc.query(sql, new KategoriRowMapper());
+	}
+	
+	public List<Kategori> daftarKategoriByBuku(Buku buku) {
+		String sql = "select k.id, k.nama, k.keterangan from kategori_buku k join daftar_kategori_buku d on k.id = d.kategori_id where d.buku_id = ?";
+		return this.jdbc.query(sql, new KategoriRowMapper(), new Object[] {buku.getId()});
 	}
 
 	public Kategori findById(String primaryKey) throws EmptyResultDataAccessException {

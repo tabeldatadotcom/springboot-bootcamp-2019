@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tabeldata.bootcamp.belajarspringboot.model.Buku;
+import com.tabeldata.bootcamp.belajarspringboot.model.Kategori;
 
 @Repository
 @Transactional(readOnly = true)
@@ -21,6 +22,9 @@ public class BukuDao {
 
 	@Autowired
 	private JdbcTemplate jdbc;
+	
+	@Autowired
+	private KategoriBukuDao kategoriDao;
 
 	public List<Buku> daftarList() {
 		String sql = "select * from buku";
@@ -122,9 +126,11 @@ public class BukuDao {
 			aBuku.setCreatedDate(rs.getTimestamp("created_date"));
 			aBuku.setLastUpdatedDate(rs.getTimestamp("last_updated_date"));
 			aBuku.setLastUpdatedBy(rs.getString("last_updated_by"));
+			List<Kategori> list = kategoriDao.daftarKategoriByBuku(aBuku);
+			aBuku.setDaftarKategori(list);
 			return aBuku;
 		}
 
 	}
-
+	
 }

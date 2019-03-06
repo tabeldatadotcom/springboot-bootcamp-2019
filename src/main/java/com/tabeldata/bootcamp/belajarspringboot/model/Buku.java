@@ -1,6 +1,8 @@
 package com.tabeldata.bootcamp.belajarspringboot.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Buku {
 
@@ -14,6 +16,7 @@ public class Buku {
 	private String createdBy;
 	private Timestamp lastUpdatedDate;
 	private String lastUpdatedBy;
+	private List<Kategori> daftarKategori = new ArrayList<Kategori>();
 	
 	@Override
 	public String toString() {
@@ -101,7 +104,14 @@ public class Buku {
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
-	
-	
 
+	public List<Kategori> getDaftarKategori() {
+		return daftarKategori;
+	}
+
+	public void setDaftarKategori(List<Kategori> daftarKategori) {
+		this.daftarKategori = daftarKategori;
+	}
+	
+	
 }
