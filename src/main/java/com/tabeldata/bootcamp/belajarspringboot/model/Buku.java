@@ -17,6 +17,7 @@ public class Buku {
 	private Timestamp lastUpdatedDate;
 	private String lastUpdatedBy;
 	private List<Kategori> daftarKategori = new ArrayList<Kategori>();
+	private Rak rak;
 	
 	@Override
 	public String toString() {
@@ -112,6 +113,14 @@ public class Buku {
 	public void setDaftarKategori(List<Kategori> daftarKategori) {
 		this.daftarKategori = daftarKategori;
 	}
-	
+
+	public Rak getRak() {
+		return rak;
+	}
+
+	public void setRak(Rak rak) {
+		this.rak = rak;
+	}
+		
 	
 }

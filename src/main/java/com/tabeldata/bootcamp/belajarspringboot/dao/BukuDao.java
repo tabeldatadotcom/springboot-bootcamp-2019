@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tabeldata.bootcamp.belajarspringboot.model.Buku;
 import com.tabeldata.bootcamp.belajarspringboot.model.Kategori;
+import com.tabeldata.bootcamp.belajarspringboot.model.Rak;
 
 @Repository
 @Transactional(readOnly = true)
@@ -27,17 +28,17 @@ public class BukuDao {
 	private KategoriBukuDao kategoriDao;
 
 	public List<Buku> daftarList() {
-		String sql = "select * from buku";
+		String sql = "select b.*, r.id as rak_id, r.nama as rak_nama, r.nomor as rak_nomor from buku b left join rak r on b.rak_id = r.id";
 		return this.jdbc.query(sql, new BukuRowMapper());
 	}
 
 	public Buku findById(String primaryKey) throws EmptyResultDataAccessException {
-		String sql = "select * from buku where id = ?";
+		String sql = "select b.*, r.id as rak_id, r.nama as rak_nama, r.nomor as rak_nomor from buku b left join rak r on b.rak_id = r.id where b.id = ?";
 		return this.jdbc.queryForObject(sql, new BukuRowMapper(), new Object[] { primaryKey });
 	}
 
 	public List<Buku> findByNamaAndNamaPengarang(String nama, String pengarang) {
-		String sql = "select * from buku where nama like ? and nama_pengarang like ?";
+		String sql = "select b.*, r.id as rak_id, r.nama as rak_nama, r.nomor as rak_nomor from buku b left join rak r on b.rak_id = r.id where b.nama like ? and b.nama_pengarang like ?";
 		return this.jdbc.query(sql, new BukuRowMapper(),
 				new Object[] { new StringBuilder("%").append(nama).append("%").toString(),
 						new StringBuilder().append(pengarang).append("%").toString() });
@@ -126,8 +127,16 @@ public class BukuDao {
 			aBuku.setCreatedDate(rs.getTimestamp("created_date"));
 			aBuku.setLastUpdatedDate(rs.getTimestamp("last_updated_date"));
 			aBuku.setLastUpdatedBy(rs.getString("last_updated_by"));
+			
 			List<Kategori> list = kategoriDao.daftarKategoriByBuku(aBuku);
 			aBuku.setDaftarKategori(list);
+			
+			Rak rak = new Rak();
+			rak.setId(rs.getString("rak_id"));
+			rak.setNama(rs.getString("rak_nama"));
+			rak.setNomor(rs.getInt("rak_nomor"));
+			aBuku.setRak(rak);
+			
 			return aBuku;
 		}
 
