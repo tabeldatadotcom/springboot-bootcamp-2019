@@ -1,6 +1,5 @@
 package com.tabeldata.bootcamp.belajarspringboot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,7 +23,6 @@ public class TransaksiDetail {
     @GeneratedValue(generator = "uuid_gen")
     private String id;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "transaksi_id", nullable = false)
     private Transaksi transaksi;

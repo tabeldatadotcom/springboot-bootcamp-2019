@@ -5,8 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * create table transaksi( id character varying(64) not null primary key,
@@ -38,9 +36,6 @@ public class Transaksi {
 
 	@Column(name = "created_by", length = 64)
 	private String createdBy;
-
-	@OneToMany(mappedBy = "transaksi")
-	private List<TransaksiDetail> detail = new ArrayList<TransaksiDetail>();
 
 	public String getId() {
 		return id;
@@ -82,12 +77,5 @@ public class Transaksi {
 		this.createdBy = createdBy;
 	}
 
-	public List<TransaksiDetail> getDetail() {
-		return detail;
-	}
-
-	public void setDetail(List<TransaksiDetail> detail) {
-		this.detail = detail;
-	}
 
 }

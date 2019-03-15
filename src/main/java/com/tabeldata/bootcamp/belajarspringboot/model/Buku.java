@@ -51,7 +51,7 @@ public class Buku {
 	private List<Kategori> daftarKategori = new ArrayList<Kategori>();
 
 	@ManyToOne
-	@JoinColumn(name = "rak_id", nullable = false)
+	@JoinColumn(name = "rak_id")
 	private Rak rak;
 	
 	@Override

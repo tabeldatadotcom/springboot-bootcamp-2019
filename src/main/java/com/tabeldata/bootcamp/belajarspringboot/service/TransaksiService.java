@@ -1,5 +1,6 @@
 package com.tabeldata.bootcamp.belajarspringboot.service;
 
+import com.tabeldata.bootcamp.belajarspringboot.dto.TransaksiDto;
 import com.tabeldata.bootcamp.belajarspringboot.model.Transaksi;
 import com.tabeldata.bootcamp.belajarspringboot.model.TransaksiDetail;
 import com.tabeldata.bootcamp.belajarspringboot.repository.TransaksiDetailRepository;
@@ -22,19 +23,29 @@ public class TransaksiService {
     public TransaksiDetailRepository trxDetailRepo;
 
     @Transactional
-    public Transaksi save(Transaksi transaksi) {
+    public Transaksi save(TransaksiDto transaksi) {
         List<TransaksiDetail> details = transaksi.getDetail();
-        transaksi = trxRepo.save(transaksi);
+        Transaksi trx = new Transaksi();
+        trx.setAnggota(transaksi.getAnggota());
+        trx.setCreatedBy(transaksi.getCreatedBy());
+        trx.setCreatedDate(transaksi.getCreatedDate());
+        trx.setTanggal(transaksi.getTanggal());
+
+        trx = trxRepo.save(trx);
 
         for (TransaksiDetail detail : details) {
-            detail.setTransaksi(transaksi);
+            detail.setTransaksi(trx);
         }
         trxDetailRepo.saveAll(details);
-        return transaksi;
+        return trx;
     }
 
-    public Optional<Transaksi> findById(String id){
+    public Optional<Transaksi> findById(String id) {
         return trxRepo.findById(id);
+    }
+
+    public List<TransaksiDetail> findByTransaksiId(String transaksiId) {
+        return trxDetailRepo.findByTransaksiId(transaksiId);
     }
 
 }
