@@ -1,5 +1,8 @@
 package com.tabeldata.bootcamp.belajarspringboot.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,13 +17,29 @@ import java.util.List;
  * @author dimasm93
  *
  */
+
+@Entity
 public class Transaksi {
 
+	@Id
+	@Column(length = 64)
+	@GenericGenerator(name = "uuid_gen", strategy = "uuid2")
+	@GeneratedValue(generator = "uuid_gen")
 	private String id;
+
+	@ManyToOne
+	@JoinColumn(name = "anggota_id", nullable = false)
 	private Anggota anggota;
+
 	private Date tanggal;
+
+	@Column(name = "created_date")
 	private Timestamp createdDate;
+
+	@Column(name = "created_by", length = 64)
 	private String createdBy;
+
+	@OneToMany(mappedBy = "transaksi")
 	private List<TransaksiDetail> detail = new ArrayList<TransaksiDetail>();
 
 	public String getId() {

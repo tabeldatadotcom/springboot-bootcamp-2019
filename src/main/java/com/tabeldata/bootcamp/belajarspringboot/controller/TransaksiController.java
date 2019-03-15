@@ -1,27 +1,33 @@
 package com.tabeldata.bootcamp.belajarspringboot.controller;
 
+import com.tabeldata.bootcamp.belajarspringboot.model.Transaksi;
+import com.tabeldata.bootcamp.belajarspringboot.service.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.tabeldata.bootcamp.belajarspringboot.dao.TransaksiDao;
-import com.tabeldata.bootcamp.belajarspringboot.model.Transaksi;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/transaksi")
 public class TransaksiController {
 	
 	@Autowired
-	private TransaksiDao dao;
+	private TransaksiService service;
 	
 	@PostMapping("/")
 	public ResponseEntity<Transaksi> save(@RequestBody Transaksi trx){
-		dao.save(trx);
-		
-		return ResponseEntity.ok().build();
+		trx = service.save(trx);
+		return ResponseEntity.ok(trx);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Transaksi> findById(@PathVariable("id") String id){
+		Optional<Transaksi> transaksiOptional = service.findById(id);
+		if(transaksiOptional.isPresent())
+			return ResponseEntity.ok(transaksiOptional.get());
+		else
+			return ResponseEntity.noContent().build();
 	}
 
 }
