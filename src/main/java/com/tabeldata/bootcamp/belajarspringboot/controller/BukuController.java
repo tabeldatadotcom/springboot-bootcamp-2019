@@ -1,72 +1,67 @@
 package com.tabeldata.bootcamp.belajarspringboot.controller;
 
-import java.util.List;
-
+import com.tabeldata.bootcamp.belajarspringboot.dao.BukuDao;
+import com.tabeldata.bootcamp.belajarspringboot.model.Buku;
+import com.tabeldata.bootcamp.belajarspringboot.repository.BukuRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.tabeldata.bootcamp.belajarspringboot.dao.BukuDao;
-import com.tabeldata.bootcamp.belajarspringboot.model.Buku;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/buku")
 public class BukuController {
-	
-	private final Logger console = LoggerFactory.getLogger(BukuController.class);
 
-	@Autowired
-	private BukuDao dao;
+    private final Logger console = LoggerFactory.getLogger(BukuController.class);
 
-	@GetMapping(path = "/xml/list", produces = MediaType.APPLICATION_XML_VALUE)
-	public List<Buku> findAllXml() {
-		return dao.daftarList();
-	}
+    @Autowired
+    private BukuDao dao;
 
-	@GetMapping(path = "/json/list")
-	public List<Buku> findAllJson() {
-		return dao.daftarList();
-	}
+    @Autowired
+    private BukuRepository repo;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Buku> findById(@PathVariable("id") String primaryKey) {
-		try {
-			Buku buku = dao.findById(primaryKey);
-			return ResponseEntity.ok(buku);
-		} catch (EmptyResultDataAccessException erdae) {
-			return ResponseEntity.noContent().build();
-		}
-	}
+    @GetMapping(path = "/xml/list", produces = MediaType.APPLICATION_XML_VALUE)
+    public List<Buku> findAllXml() {
+        return dao.daftarList();
+    }
 
-	@PostMapping("/")
-	public ResponseEntity<Buku> save(@RequestBody Buku buku) {
-		console.info("created : {}", buku.toString());
-		dao.save(buku);
-		return ResponseEntity.ok().build();
-	}
+    @GetMapping(path = "/json/list")
+    public Iterable<Buku> findAllJson() {
+        return repo.findAll();
+    }
 
-	@PutMapping("/")
-	public ResponseEntity<Buku> update(@RequestBody Buku buku) {
-		console.info("updated : {}", buku.toString());
-		dao.update(buku);
-		return ResponseEntity.ok().build();
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<Buku> findById(@PathVariable("id") String primaryKey) {
+        Optional<Buku> bukuOptional = repo.findById(primaryKey);
+        if (bukuOptional.isPresent())
+            return ResponseEntity.ok(bukuOptional.get());
+        else
+            return ResponseEntity.noContent().build();
+    }
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Buku> delete(@PathVariable("id") String primaryKey) {
-		dao.delete(primaryKey);
-		return ResponseEntity.ok().build();
-	}
+    @PostMapping("/")
+    public ResponseEntity<Buku> save(@RequestBody Buku buku) {
+        console.info("created : {}", buku.toString());
+        dao.save(buku);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<Buku> update(@RequestBody Buku buku) {
+        console.info("updated : {}", buku.toString());
+        dao.update(buku);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Buku> delete(@PathVariable("id") String primaryKey) {
+        dao.delete(primaryKey);
+        return ResponseEntity.ok().build();
+    }
 
 }
