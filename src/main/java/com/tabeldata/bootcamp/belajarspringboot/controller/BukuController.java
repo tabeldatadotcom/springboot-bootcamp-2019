@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,18 +28,23 @@ public class BukuController {
     @Autowired
     private BukuRepository repo;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/xml/list", produces = MediaType.APPLICATION_XML_VALUE)
     public List<Buku> findAllXml() {
+        console.info("masuk cari data");
         return dao.daftarList();
     }
 
+    @PostAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/json/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Iterable<Buku> findAllJson() {
+        console.info("masuk cari data");
         return repo.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Buku> findById(@PathVariable("id") String primaryKey) {
+    public ResponseEntity<Buku> findById(Principal principal, @PathVariable("id") String primaryKey) {
+        console.info("user login : {}", principal.getName());
         Optional<Buku> bukuOptional = repo.findById(primaryKey);
         if (bukuOptional.isPresent())
             return ResponseEntity.ok(bukuOptional.get());
