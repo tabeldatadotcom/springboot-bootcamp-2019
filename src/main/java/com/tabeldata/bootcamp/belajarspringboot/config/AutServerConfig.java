@@ -17,8 +17,13 @@ import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableAuthorizationServer
@@ -35,8 +40,15 @@ public class AutServerConfig extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
 
     @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("dimas");
+        return converter;
+    }
+
+    @Bean
     public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+        return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean
@@ -80,10 +92,20 @@ public class AutServerConfig extends AuthorizationServerConfigurerAdapter {
                 .autoApprove(true);
     }
 
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(
+                Arrays.asList(tokenEnhancer(), accessTokenConverter()));
         endpoints
                 .tokenStore(tokenStore())
+                .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager);
+    }
+
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new TokenCustomByApp();
     }
 }
