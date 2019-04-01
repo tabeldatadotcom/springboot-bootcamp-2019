@@ -30,7 +30,7 @@ public class BukuController {
         return dao.daftarList();
     }
 
-    @GetMapping(path = "/json/list")
+    @GetMapping(path = "/json/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Iterable<Buku> findAllJson() {
         return repo.findAll();
     }
